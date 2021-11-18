@@ -57,7 +57,7 @@ self.addEventListener("fetch", event => {
         return fetch(event.request)
           .then(response => {
             cache.post(event.request, response.clone());
-            console.log(response);
+            
             return response;
           })
           .catch(() => caches.match(event.request));
@@ -73,7 +73,7 @@ self.addEventListener("fetch", event => {
         return fetch(event.request)
           .then(response => {
             cache.post(event.request, response.clone());
-            console.log(response);
+            
             return response;
           })
           .catch(() => caches.match(event.request));
@@ -83,20 +83,20 @@ self.addEventListener("fetch", event => {
   }
 
   // use cache first for all other requests for performance
-  // event.respondWith(
-  //   caches.match(event.request).then(cachedResponse => {
-  //     if (cachedResponse) {
-  //       return cachedResponse;
-  //     }
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-  //     // request is not in cache. make network request and cache the response
-  //     return caches.open(RUNTIME_CACHE).then(cache => {
-  //       return fetch(event.request).then(response => {
-  //         return cache.post(event.request, response.clone()).then(() => {
-  //           return response;
-  //         });
-  //       });
-  //     });
-  //   })
-  // );
+      // request is not in cache. make network request and cache the response
+      return caches.open(RUNTIME_CACHE).then(cache => {
+        return fetch(event.request).then(response => {
+          return cache.post(event.request, response.clone()).then(() => {
+            return response;
+          });
+        });
+      });
+    })
+  );
 });
