@@ -9,6 +9,10 @@ const FILES_TO_CACHE = [
   "/assets/icons/icon_192x192.png",
   "/assets/icons/icon_128x128.png",
   "/assets/icons/icon_96x96.png",
+  "/index.js",
+  "/favicon.ico",
+  "/style.css",
+  "/db.js",
 ];
 
 const STATIC_CACHE = "static-cache-v1";
@@ -65,23 +69,6 @@ self.addEventListener("fetch", event => {
     );
     return;
   }
-
-  if (event.request.url.includes("/api/transaction/bulk")) {
-    // make network request and fallback to cache if network request fails (offline)
-    event.respondWith(
-      caches.open(RUNTIME_CACHE).then(cache => {
-        return fetch(event.request)
-          .then(response => {
-            cache.put(event.request, response.clone());
-            
-            return response;
-          })
-          .catch(() => caches.match(event.request));
-      })
-    );
-    return;
-  }
-
   // use cache first for all other requests for performance
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
