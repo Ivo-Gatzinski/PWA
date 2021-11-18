@@ -56,7 +56,7 @@ self.addEventListener("fetch", event => {
       caches.open(RUNTIME_CACHE).then(cache => {
         return fetch(event.request)
           .then(response => {
-            cache.post(event.request, response.clone());
+            cache.put(event.request, response.clone());
             
             return response;
           })
@@ -72,7 +72,7 @@ self.addEventListener("fetch", event => {
       caches.open(RUNTIME_CACHE).then(cache => {
         return fetch(event.request)
           .then(response => {
-            cache.post(event.request, response.clone());
+            cache.put(event.request, response.clone());
             
             return response;
           })
@@ -92,7 +92,7 @@ self.addEventListener("fetch", event => {
       // request is not in cache. make network request and cache the response
       return caches.open(RUNTIME_CACHE).then(cache => {
         return fetch(event.request).then(response => {
-          return cache.post(event.request, response.clone()).then(() => {
+          return cache.put(event.request, response.clone()).then(() => {
             return response;
           });
         });
