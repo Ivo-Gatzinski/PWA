@@ -23,7 +23,7 @@ When brought back online:
 
 If you are an avid traveller, this app will be very useful, as your account balance is tracked accurately.
 
-The following screenshot demonstrate the functions of the app:
+The following screenshot demonstrates the functions of the app:
 
 ![Budget Tracker](/public/assets/screen.png)
 
